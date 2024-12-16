@@ -1,15 +1,17 @@
 import React from 'react'
+import { Header } from './Components/Header/Header'
+import Balance from './Components/Card/Balance'
+import Charts from './Components/Charts/Charts'
+import Table from './Components/Table/Table'
 
-import './App.css'
-
-function App() {
-
-
+export default function App() {
   return (
-    <>
-     <h1>Starter....</h1>
-    </>
+    <div>
+      <Header />
+   <Balance />  
+   <Charts />
+   <Table />
+
+    </div>
   )
 }
-
-export default App
