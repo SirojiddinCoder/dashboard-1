@@ -12,9 +12,12 @@ export default function App() {
             <Header/>
             <Balance/>
             <Charts/>
-            <TotalExpenses/>
+           
+           <div style={{display:'flex', alignItems:'center'}} className='container'>
+           <TotalExpenses/>
             {/* jami daromadlar agar kerak bo'lsa*/}
             <TotalIncome/>
+           </div>
         </div>
     )
 }
