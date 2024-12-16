@@ -1,0 +1,30 @@
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+.closebtn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    right: -10px;
+    top: -10px;
+}
+
+.closebtn:hover {
+    transform: scale(1.1);
+}
+
+.closebtn span {
+    font-size: 25px;
+}

@@ -1,46 +1,34 @@
-import React from 'react';
+import React from "react";
+import AllIncome from "../Modals/AllIncome.jsx";
+import {TotalExpenses} from "../Modals/TotalExpensesModal.jsx";
+import {useBalance} from "../../context/Context.jsx";
+import {FormatAmount} from "../../helper/Formats.js";
 
 const Balance = () => {
-  return (
-    <div className="container my-4">
-      <div className="row g-3">
-        {/* Umumiy Balans */}
-        <div className="col-md-4">
-          <div
-            className="card text-white bg-primary mb-3 shadow"
-            style={{ height: '100%' }}
-          >
-            <div className="card-body">
-              <h5 className="card-title">Umumiy balans</h5>
-              <h2 className="fw-bold">500000 So'm</h2>
-            </div>
-          </div>
-        </div>
+    const {incomeData, transactions} = useBalance();
 
-        {/* Jami Daromad */}
-        <div className="col-md-4">
-          <div className="card border-light shadow mb-3" style={{ height: '100%' }}>
-            <div className="card-body">
-              <h5 className="card-title fw-bold">Jami Daromad</h5>
-              <p className="fs-4">500000 So'm</p>
-              <button className="btn btn-primary w-100">Kirimlar</button>
+    return (
+        <div className="container my-4">
+            <div className="row g-3">
+                {/* Umumiy Balans */}
+                <div className="col-md-4">
+                    <div className="card text-white bg-primary mb-3 shadow" style={{height: "100%"}}>
+                        <div className="card-body">
+                            <h5 className="card-title">Umumiy balans</h5>
+                            <h2 className="fw-bold">
+                                {FormatAmount(incomeData?.reduce((a, b) => a + +b?.amount, 0) - transactions?.reduce((a, b) => a + +b?.amount, 0))} so'm
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                {/* Jami Daromad */}
+                <AllIncome/>
+                {/* Jami Harajatlar */}
+                <TotalExpenses/>
             </div>
-          </div>
+            {/* Modals */}
         </div>
-
-        {/* Jami Harajatlar */}
-        <div className="col-md-4">
-          <div className="card border-light shadow mb-3" style={{ height: '100%' }}>
-            <div className="card-body">
-              <h5 className="card-title fw-bold">Jami Harajatlar</h5>
-              <p className="fs-4">0 So'm</p>
-              <button className="btn btn-primary w-100">Chiqimlar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Balance;
