@@ -1,11 +1,21 @@
-import React from 'react'
-import './Header.css'
+import React from "react";
+import "./Header.css";
 
-export const Header = () => {
-    return (
-        <div className='HeaderOne text-white'>
-            <h1>Shaxsiy moliyavoy boshqaruv tizimi</h1>
-            
-        </div>
-    )
-}
+export const Header = ({ onCurrencyChange, selectedCurrency, currencies }) => {
+  return (
+    <div className="HeaderOne text-white d-flex justify-content-between align-items-center p-3">
+      <h1>Shaxsiy moliyaviy boshqaruv tizimi</h1>
+      <select
+        className="form-select w-auto"
+        value={selectedCurrency}
+        onChange={onCurrencyChange}
+      >
+        {currencies.map((currency) => (
+          <option key={currency} value={currency}>
+            {currency}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
