@@ -8,7 +8,7 @@ import './App.css';
 
 export default function App() {
     return (
-        <div>
+        <div className='pb-5'>
           
             <Header
                 onCurrencyChange={(e) => console.log("Currency changed to", e.target.value)}
@@ -19,7 +19,7 @@ export default function App() {
 
             <Charts />
 
-            <div style={{ display: 'flex', alignItems: 'center' }} className='container'>
+            <div>
                 <TotalExpenses />
                 <TotalIncome />
             </div>
