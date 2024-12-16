@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
+import AllIncome from "../Modals/AllIncome.jsx";
+import { TotalExpenses } from "../Modals/TotalExpensesModal.jsx";
 import { useBalance } from "../../context/Context.jsx";
 import { FormatAmount } from "../../helper/Formats.js";
 
 const Balance = () => {
   const { incomeData, transactions } = useBalance();
   const [exchangeRates, setExchangeRates] = useState({});
-  const [selectedCurrency, setSelectedCurrency] = useState("UZS");
-
+  const [selectedCurrency, setSelectedCurrency] = useState("UZS"); 
+  
   useEffect(() => {
     const fetchExchangeRates = async () => {
       try {
@@ -14,20 +16,17 @@ const Balance = () => {
         const data = await response.json();
         setExchangeRates(data.rates);
       } catch (error) {
-        console.error("Xatolik yuz berdi...", error);
+        console.error("Failed to fetch exchange rates", error);
       }
     };
     fetchExchangeRates();
   }, []);
 
-  const convertCurrency = (amount) => {
-    const rate = exchangeRates[selectedCurrency] || 1;
-    return (amount * rate).toFixed(2);
-  };
 
-  const totalIncome = incomeData?.reduce((a, b) => a + +b?.amount, 0) || 0;
-  const totalExpenses = transactions?.reduce((a, b) => a + +b?.amount, 0) || 0;
-  const totalBalance = totalIncome - totalExpenses;
+  const convertCurrency = (amount) => {
+    const rate = exchangeRates[selectedCurrency] || 1; 
+    return (amount * rate).toFixed(2); 
+  };
 
   return (
     <div className="container my-4">
@@ -54,61 +53,18 @@ const Balance = () => {
             <div className="card-body">
               <h5 className="card-title">Umumiy balans</h5>
               <h2 className="fw-bold">
-                {convertCurrency(totalBalance)} {selectedCurrency}
+                {convertCurrency(
+                  incomeData?.reduce((a, b) => a + +b?.amount, 0) -
+                    transactions?.reduce((a, b) => a + +b?.amount, 0)
+                )} {selectedCurrency}
               </h2>
             </div>
           </div>
         </div>
-
         {/* Jami Daromad */}
-        <div className="col-md-4">
-          <div className="card text-white bg-success mb-3 shadow" style={{ height: "100%" }}>
-            <div className="card-body">
-              <h5 className="card-title">Jami Daromad</h5>
-              <ul className="list-group">
-                {incomeData?.map((item) => (
-                  <li
-                    key={item.id}
-                    className="list-group-item d-flex justify-content-between align-items-center"
-                  >
-                    {item.description}
-                    <span>
-                      {convertCurrency(item.amount)} {selectedCurrency}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <h3 className="fw-bold mt-3">
-                {convertCurrency(totalIncome)} {selectedCurrency}
-              </h3>
-            </div>
-          </div>
-        </div>
-
+        <AllIncome convertCurrency={convertCurrency} selectedCurrency={selectedCurrency} />
         {/* Jami Harajatlar */}
-        <div className="col-md-4">
-          <div className="card text-white bg-danger mb-3 shadow" style={{ height: "100%" }}>
-            <div className="card-body">
-              <h5 className="card-title">Jami Harajatlar</h5>
-              <ul className="list-group">
-                {transactions?.map((item) => (
-                  <li
-                    key={item.id}
-                    className="list-group-item d-flex justify-content-between align-items-center"
-                  >
-                    {item.description}
-                    <span>
-                      {convertCurrency(item.amount)} {selectedCurrency}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <h3 className="fw-bold mt-3">
-                {convertCurrency(totalExpenses)} {selectedCurrency}
-              </h3>
-            </div>
-          </div>
-        </div>
+        <TotalExpenses convertCurrency={convertCurrency} selectedCurrency={selectedCurrency} />
       </div>
     </div>
   );
