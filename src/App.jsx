@@ -19,10 +19,10 @@ export default function App() {
 
             <Charts />
 
-            <div>
+       
                 <TotalExpenses />
                 <TotalIncome />
-            </div>
+        
         </div>
     );
 }
